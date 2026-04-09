@@ -199,12 +199,13 @@
 */
 
 /* Ensure page content rendered by IX2 is visible */
-.ticker-track, .flex-block-10, .nav-page-link, .code-embed-15 { visibility: visible !important; }
+.ticker-track, .flex-block-10 { visibility: visible !important; }
 .w-condition-invisible { display: none !important; }
 
 /* Nav screen: hidden by default, shown via JS */
 .nav-screen { visibility: hidden; }
 .nav-screen.is-open { visibility: visible !important; }
+.nav-screen.is-open .nav-page-link, .nav-screen.is-open .code-embed-15 { visibility: visible !important; }
 
 /* Review popup: hidden by default, shown via JS */
 .review-pop { visibility: hidden; }
