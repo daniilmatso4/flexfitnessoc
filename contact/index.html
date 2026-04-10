@@ -1055,4 +1055,61 @@ body.ghl-open {
   reviewBgClose?.addEventListener('click', closeReview);
 })();
 </script>
+
+<script>
+/* ===== CONTACT FORM → GOOGLE SHEETS ===== */
+(function() {
+  // REPLACE THIS URL with your deployed Google Apps Script web app URL
+  var SCRIPT_URL = "PASTE_YOUR_GOOGLE_SCRIPT_URL_HERE";
+
+  var form = document.getElementById('wf-form-Question');
+  if (!form) return;
+
+  var successDiv = form.parentElement.querySelector('.w-form-done');
+  var errorDiv = form.parentElement.querySelector('.w-form-fail');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var btn = form.querySelector('[type="submit"]');
+    var originalText = btn.value;
+    btn.value = 'Sending...';
+    btn.disabled = true;
+
+    var payload = {
+      formType: 'contact',
+      firstName: (form.querySelector('#First-Name') || {}).value || '',
+      lastName: (form.querySelector('#Last-Name') || {}).value || '',
+      email: (form.querySelector('#email') || {}).value || '',
+      phone: (form.querySelector('#Phone-Number') || {}).value || '',
+      message: (form.querySelector('#Message') || {}).value || ''
+    };
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'text/plain' },
+      redirect: 'follow'
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.result === 'success') {
+        form.style.display = 'none';
+        successDiv.style.display = 'block';
+        errorDiv.style.display = 'none';
+      } else {
+        errorDiv.style.display = 'block';
+      }
+    })
+    .catch(function() {
+      errorDiv.style.display = 'block';
+    })
+    .finally(function() {
+      btn.value = originalText;
+      btn.disabled = false;
+    });
+  });
+})();
+</script>
 </body></html>
