@@ -203,9 +203,10 @@
 .w-condition-invisible { display: none !important; }
 
 /* Nav screen: hidden by default, shown via JS */
-.nav-screen { visibility: hidden; }
+.nav-screen { visibility: hidden; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 .nav-screen.is-open { visibility: visible !important; }
 .nav-screen.is-open .nav-page-link, .nav-screen.is-open .code-embed-15 { visibility: visible !important; }
+.nav-service-screen { overflow-y: auto; -webkit-overflow-scrolling: touch; }
 
 /* Review popup: hidden by default, shown via JS */
 .review-pop { visibility: hidden; }
