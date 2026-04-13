@@ -390,6 +390,28 @@ body.ghl-open { overflow:hidden; }
 })();
 </script>
 <script>
+/* ===== PHONE NUMBER FORMATTER ===== */
+(function() {
+  function formatPhone(val) {
+    var d = val.replace(/\D/g, '');
+    if (d.length > 10) d = d.substring(0, 10);
+    if (d.length >= 7) return '(' + d.substring(0,3) + ') ' + d.substring(3,6) + '-' + d.substring(6);
+    if (d.length >= 4) return '(' + d.substring(0,3) + ') ' + d.substring(3);
+    if (d.length > 0) return '(' + d;
+    return '';
+  }
+  document.addEventListener('input', function(e) {
+    if (e.target.type === 'tel') {
+      var pos = e.target.selectionStart;
+      var old = e.target.value;
+      e.target.value = formatPhone(old);
+      if (e.target.value.length > old.length) pos++;
+      e.target.setSelectionRange(pos, pos);
+    }
+  });
+})();
+</script>
+<script>
 /* ===== NAV MENU TOGGLE ===== */
 (function(){var mb=document.querySelector('.nav-menu-button'),ns=document.querySelector('.nav-screen'),oi=mb?.querySelector('.code-embed-15.open'),ci=mb?.querySelector('.code-embed-15.close');if(!mb||!ns)return;ci&&(ci.style.display='none');mb.addEventListener('click',function(){var io=ns.classList.toggle('is-open');if(oi)oi.style.display=io?'none':'';if(ci)ci.style.display=io?'':'none';document.body.style.overflow=io?'hidden':''});var sb=document.querySelector('[nav-page="services"]'),ss=document.querySelector('.nav-service-screen'),gb=ss?.querySelector('.div-block-71');if(sb&&ss){sb.addEventListener('click',function(){ss.classList.add('is-open')});gb?.addEventListener('click',function(){ss.classList.remove('is-open')})}})();
 </script>

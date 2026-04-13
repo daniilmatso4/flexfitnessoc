@@ -977,6 +977,27 @@ body.ghl-open { overflow:hidden; }
   });
 })();
 </script><script>
+/* ===== PHONE NUMBER FORMATTER ===== */
+(function() {
+  function formatPhone(val) {
+    var d = val.replace(/\D/g, '');
+    if (d.length > 10) d = d.substring(0, 10);
+    if (d.length >= 7) return '(' + d.substring(0,3) + ') ' + d.substring(3,6) + '-' + d.substring(6);
+    if (d.length >= 4) return '(' + d.substring(0,3) + ') ' + d.substring(3);
+    if (d.length > 0) return '(' + d;
+    return '';
+  }
+  document.addEventListener('input', function(e) {
+    if (e.target.type === 'tel') {
+      var pos = e.target.selectionStart;
+      var old = e.target.value;
+      e.target.value = formatPhone(old);
+      if (e.target.value.length > old.length) pos++;
+      e.target.setSelectionRange(pos, pos);
+    }
+  });
+})();
+</script><script>
 /* ===== NAV MENU TOGGLE ===== */
 (function() {
   const menuBtn = document.querySelector('.nav-menu-button');

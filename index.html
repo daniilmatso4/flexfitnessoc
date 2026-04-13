@@ -2746,6 +2746,27 @@ body.ghl-open { overflow:hidden; }
 /* ===== iOS VIEWPORT FIX ===== */
 (function(){function s(){document.documentElement.style.setProperty('--vh',window.innerHeight*0.01+'px')}s();window.addEventListener('resize',s)})();
 
+/* ===== PHONE NUMBER FORMATTER ===== */
+(function() {
+  function formatPhone(val) {
+    var d = val.replace(/\D/g, '');
+    if (d.length > 10) d = d.substring(0, 10);
+    if (d.length >= 7) return '(' + d.substring(0,3) + ') ' + d.substring(3,6) + '-' + d.substring(6);
+    if (d.length >= 4) return '(' + d.substring(0,3) + ') ' + d.substring(3);
+    if (d.length > 0) return '(' + d;
+    return '';
+  }
+  document.addEventListener('input', function(e) {
+    if (e.target.type === 'tel') {
+      var pos = e.target.selectionStart;
+      var old = e.target.value;
+      e.target.value = formatPhone(old);
+      if (e.target.value.length > old.length) pos++;
+      e.target.setSelectionRange(pos, pos);
+    }
+  });
+})();
+
 /* ===== DUAL MODAL FLOW: Phone Capture → GHL ===== */
 (function () {
   var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLBPMU0fLTCAhfh7mHYarwf4Vf5FibT4Cud-52B-ut37XRL6jX6vWVEEUNW5Ao5-AU/exec";
