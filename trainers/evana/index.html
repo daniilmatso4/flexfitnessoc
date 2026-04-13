@@ -287,33 +287,109 @@
 
 </div><!-- end .wrapper -->
 
-<!-- GHL FULLSCREEN MODAL -->
+<!-- STEP 1: QUICK PHONE CAPTURE -->
+<div id="phone-capture">
+  <div id="pc-backdrop"></div>
+  <div id="pc-content">
+    <button id="pc-close" aria-label="Close">&#x2715;</button>
+    <div id="pc-form-wrap">
+      <h2 style="font-family:Oswald,sans-serif; font-size:1.8rem; text-transform:uppercase; text-align:center; color:#fff; margin-bottom:6px;">Get Instant Pricing Info</h2>
+      <p style="text-align:center; color:#aaa; font-size:13px; margin-bottom:24px;">We'll text you our pricing, hours, and a free session offer.</p>
+      <form id="pc-form" style="display:flex; flex-direction:column; gap:12px;">
+        <input type="text" name="firstName" placeholder="First Name *" required style="padding:14px 16px; background:#1a1a1a; border:1px solid #333; border-radius:6px; color:#fff; font-size:15px; font-family:Montserrat,sans-serif; outline:none;" onfocus="this.style.borderColor='#e50914'" onblur="this.style.borderColor='#333'"/>
+        <input type="tel" name="phone" placeholder="Phone Number *" required style="padding:14px 16px; background:#1a1a1a; border:1px solid #333; border-radius:6px; color:#fff; font-size:15px; font-family:Montserrat,sans-serif; outline:none;" onfocus="this.style.borderColor='#e50914'" onblur="this.style.borderColor='#333'"/>
+        <button type="submit" id="pc-submit" style="padding:16px; background:#e50914; color:#fff; border:none; border-radius:6px; font-family:Oswald,sans-serif; font-size:1.1rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; cursor:pointer; transition:background 0.3s;" onmouseover="this.style.background='#ff1a2e'" onmouseout="this.style.background='#e50914'">Send Me Info &amp; Continue</button>
+      </form>
+      <p style="text-align:center; color:#555; font-size:11px; margin-top:12px;">By submitting, you agree to receive a text from Flex Fitness.</p>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 2: GHL FULLSCREEN MODAL -->
 <div id="ghl-modal">
   <div id="ghl-backdrop"></div>
   <div id="ghl-content">
-    <button id="ghl-close" aria-label="Close">&cross;</button>
+    <button id="ghl-close" aria-label="Close">&#x2715;</button>
     <iframe src="https://link.builtbyshah.com/widget/survey/bmkFtP0g2k2NwZGxZZ6D" id="bmkFtP0g2k2NwZGxZZ6D" title="survey" scrolling="no"></iframe>
     <script src="https://link.builtbyshah.com/js/form_embed.js"></script>
   </div>
 </div>
 
 <style>
-#ghl-modal{display:none;position:fixed;inset:0;z-index:9999999999}
-#ghl-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:1}
-#ghl-content{position:relative;z-index:2;width:100vw;height:calc(var(--vh,1vh)*100);padding:16px;overflow-y:auto;-webkit-overflow-scrolling:touch}
-#ghl-content iframe{width:100%;min-height:100%;border:none;background:transparent;display:block}
-#ghl-close{position:sticky;top:16px;margin-left:auto;margin-right:16px;width:32px;height:32px;border-radius:100px;background:#fff;color:#000;font-size:24px;line-height:1;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;z-index:3}
-@media(max-width:767px){#ghl-close{width:28px;height:28px;font-size:20px;margin-right:12px;top:12px}}
-@supports(-webkit-touch-callout:none){#ghl-content{height:calc(var(--vh,1vh)*100);padding-top:calc(16px + env(safe-area-inset-top));padding-bottom:calc(16px + env(safe-area-inset-bottom))}}
-body.ghl-open{overflow:hidden}
+#phone-capture { display:none; position:fixed; inset:0; z-index:99999999999; }
+#pc-backdrop { position:absolute; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); z-index:1; }
+#pc-content { position:relative; z-index:2; width:100vw; height:100%; display:flex; align-items:center; justify-content:center; padding:16px; }
+#pc-form-wrap { background:#111; border:1px solid #222; border-radius:12px; padding:40px 32px; width:100%; max-width:420px; }
+#pc-close { position:fixed; top:20px; right:20px; width:36px; height:36px; border-radius:50%; background:#fff; color:#000; font-size:22px; line-height:1; display:flex; align-items:center; justify-content:center; border:none; cursor:pointer; z-index:3; }
+#ghl-modal { display:none; position:fixed; inset:0; z-index:9999999999; }
+#ghl-backdrop { position:absolute; inset:0; background:rgba(0,0,0,0.55); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); z-index:1; }
+#ghl-content { position:relative; z-index:2; width:100vw; height:calc(var(--vh,1vh)*100); padding:16px; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+#ghl-content iframe { width:100%; min-height:100%; border:none; background:transparent; display:block; }
+#ghl-close { position:sticky; top:16px; margin-left:auto; margin-right:16px; width:32px; height:32px; border-radius:100px; background:#fff; color:#000; font-size:24px; line-height:1; display:flex; align-items:center; justify-content:center; border:none; cursor:pointer; z-index:3; }
+@media (max-width:767px) {
+  #pc-form-wrap { padding:32px 20px; }
+  #pc-close { width:32px; height:32px; font-size:18px; top:12px; right:12px; }
+  #ghl-close { width:28px; height:28px; font-size:20px; margin-right:12px; top:12px; }
+}
+body.ghl-open { overflow:hidden; }
 </style>
 
 <script>
-/* ===== iOS VIEWPORT HEIGHT FIX ===== */
 (function(){function s(){document.documentElement.style.setProperty('--vh',window.innerHeight*0.01+'px')}s();window.addEventListener('resize',s)})();
 
-/* ===== MODAL LOGIC ===== */
-(function(){var m=document.getElementById('ghl-modal'),b=document.getElementById('ghl-backdrop'),c=document.getElementById('ghl-close');function o(){m.style.display='block';document.body.classList.add('ghl-open')}function cl(){m.style.display='none';document.body.classList.remove('ghl-open')}document.querySelectorAll('[data-modal="open"]').forEach(function(el){el.addEventListener('click',function(e){e.preventDefault();o()})});b.addEventListener('click',cl);c.addEventListener('click',cl)})();
+(function () {
+  var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLBPMU0fLTCAhfh7mHYarwf4Vf5FibT4Cud-52B-ut37XRL6jX6vWVEEUNW5Ao5-AU/exec";
+  var pcModal = document.getElementById('phone-capture');
+  var pcBackdrop = document.getElementById('pc-backdrop');
+  var pcClose = document.getElementById('pc-close');
+  var pcForm = document.getElementById('pc-form');
+  var ghlModal = document.getElementById('ghl-modal');
+  var ghlBackdrop = document.getElementById('ghl-backdrop');
+  var ghlClose = document.getElementById('ghl-close');
+
+  function openPhoneCapture() { pcModal.style.display = 'block'; document.body.classList.add('ghl-open'); pcForm.reset(); }
+  function closePhoneCapture() { pcModal.style.display = 'none'; document.body.classList.remove('ghl-open'); }
+  function openGHL() { ghlModal.style.display = 'block'; document.body.classList.add('ghl-open'); }
+  function closeGHL() { ghlModal.style.display = 'none'; document.body.classList.remove('ghl-open'); }
+
+  document.querySelectorAll('[data-modal="open"]').forEach(function(btn) {
+    btn.addEventListener('click', function(e) { e.preventDefault(); openPhoneCapture(); });
+  });
+
+  pcBackdrop.addEventListener('click', closePhoneCapture);
+  pcClose.addEventListener('click', closePhoneCapture);
+  ghlBackdrop.addEventListener('click', closeGHL);
+  ghlClose.addEventListener('click', closeGHL);
+
+  pcForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = document.getElementById('pc-submit');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    var payload = {
+      formType: 'contact',
+      firstName: pcForm.querySelector('[name="firstName"]').value.trim(),
+      lastName: '',
+      email: '',
+      phone: pcForm.querySelector('[name="phone"]').value.trim(),
+      message: 'Inquiry from membership button'
+    };
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'text/plain' },
+      redirect: 'follow'
+    })
+    .then(function(r) { return r.json(); })
+    .catch(function() {})
+    .finally(function() {
+      btn.textContent = 'Send Me Info & Continue';
+      btn.disabled = false;
+      closePhoneCapture();
+      openGHL();
+    });
+  });
+})();
 </script>
 <script>
 /* ===== NAV MENU TOGGLE ===== */
