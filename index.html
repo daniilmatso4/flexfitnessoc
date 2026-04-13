@@ -2696,7 +2696,7 @@ Can’t beat it!!</p><a href="#" class="w-inline-block w-dyn-bind-empty w-lightb
       <p style="text-align:center; color:#aaa; font-size:13px; margin-bottom:24px;">We'll text you our pricing, hours, and a free session offer.</p>
       <form id="pc-form" style="display:flex; flex-direction:column; gap:12px;">
         <input type="text" name="firstName" placeholder="First Name *" required style="padding:14px 16px; background:#1a1a1a; border:1px solid #333; border-radius:6px; color:#fff; font-size:15px; font-family:Montserrat,sans-serif; outline:none;" onfocus="this.style.borderColor='#e50914'" onblur="this.style.borderColor='#333'"/>
-        <input type="tel" name="phone" placeholder="Phone Number *" required style="padding:14px 16px; background:#1a1a1a; border:1px solid #333; border-radius:6px; color:#fff; font-size:15px; font-family:Montserrat,sans-serif; outline:none;" onfocus="this.style.borderColor='#e50914'" onblur="this.style.borderColor='#333'"/>
+        <input type="tel" name="phone" placeholder="(555) 555-5555 *" required maxlength="14" style="padding:14px 16px; background:#1a1a1a; border:1px solid #333; border-radius:6px; color:#fff; font-size:15px; font-family:Montserrat,sans-serif; outline:none;" onfocus="this.style.borderColor='#e50914'" onblur="this.style.borderColor='#333'"/>
         <button type="submit" id="pc-submit" style="padding:16px; background:#e50914; color:#fff; border:none; border-radius:6px; font-family:Oswald,sans-serif; font-size:1.1rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; cursor:pointer; transition:background 0.3s;" onmouseover="this.style.background='#ff1a2e'" onmouseout="this.style.background='#e50914'">Send Me Info &amp; Continue</button>
       </form>
       <p style="text-align:center; color:#555; font-size:11px; margin-top:12px;">By submitting, you agree to receive a text from Flex Fitness.</p>
@@ -2757,14 +2757,19 @@ body.ghl-open { overflow:hidden; }
     return '';
   }
   document.addEventListener('input', function(e) {
-    if (e.target.type === 'tel') {
-      var pos = e.target.selectionStart;
-      var old = e.target.value;
-      e.target.value = formatPhone(old);
-      if (e.target.value.length > old.length) pos++;
-      e.target.setSelectionRange(pos, pos);
+    if (e.target && (e.target.type === 'tel' || e.target.name === 'phone' || e.target.name === 'Phone-Number')) {
+      var formatted = formatPhone(e.target.value);
+      if (e.target.value !== formatted) e.target.value = formatted;
     }
-  });
+  }, true);
+  document.addEventListener('keypress', function(e) {
+    if (e.target && (e.target.type === 'tel' || e.target.name === 'phone' || e.target.name === 'Phone-Number')) {
+      var d = e.target.value.replace(/\D/g, '');
+      if (d.length >= 10 && !e.ctrlKey && !e.metaKey && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Tab') {
+        e.preventDefault();
+      }
+    }
+  }, true);
 })();
 
 /* ===== DUAL MODAL FLOW: Phone Capture → GHL ===== */
