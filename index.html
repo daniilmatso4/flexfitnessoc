@@ -276,7 +276,17 @@
 </script>
 <style>
 /* === Hide radio button circles in service filters === */
-.w-form-formradioinput { display: none !important; }
+.w-form-formradioinput,
+.w-radio-input,
+.radio-button,
+.w-form-formradioinput--inputType-custom {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  opacity: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+}
 
 /* === Flex Fitness OC — Bold Premium Enhancements === */
 
