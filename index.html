@@ -275,6 +275,88 @@
 })();
 </script>
 <style>
+/* === SCROLL REVEAL ANIMATIONS === */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.reveal-right {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Stagger children */
+.stagger > * {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.stagger.visible > *:nth-child(1) { transition-delay: 0s; opacity: 1; transform: translateY(0); }
+.stagger.visible > *:nth-child(2) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+.stagger.visible > *:nth-child(3) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+.stagger.visible > *:nth-child(4) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+.stagger.visible > *:nth-child(5) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
+.stagger.visible > *:nth-child(6) { transition-delay: 0.5s; opacity: 1; transform: translateY(0); }
+
+/* Counter animation */
+.counter { font-family: Oswald, sans-serif; font-weight: 700; color: #e50914; }
+
+/* Glow pulse on CTA */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(229,9,20,0.2); }
+  50% { box-shadow: 0 0 40px rgba(229,9,20,0.5); }
+}
+.hero-button[data-modal="open"] {
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+/* Parallax-lite on hero */
+.hero {
+  background-attachment: fixed;
+}
+
+/* Gradient text for hero heading */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+h1.heading {
+  background: linear-gradient(90deg, #fff 40%, #e50914 50%, #fff 60%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 6s linear infinite;
+}
+
 /* === Hide radio button circles in service filters === */
 .w-form-formradioinput,
 .w-radio-input,
@@ -2994,4 +3076,75 @@ body.ghl-open { overflow:hidden; }
     });
   });
 })();
-</script></body></html>
+</script>
+
+<script>
+/* ===== SCROLL REVEAL ENGINE ===== */
+(function() {
+  // Add reveal classes to sections
+  var sections = [
+    { sel: '.services-section', cls: 'reveal' },
+    { sel: '.gallery-section', cls: 'reveal' },
+    { sel: '#fleet', cls: 'reveal' },
+    { sel: '.trainer-section', cls: 'reveal' },
+    { sel: '.competitors-section', cls: 'reveal' },
+    { sel: '.ig-section', cls: 'reveal' },
+    { sel: '.plan-section', cls: 'reveal' },
+    { sel: '.about-section', cls: 'reveal' },
+    { sel: '.equip-section', cls: 'reveal-scale' },
+    { sel: '.bottom-cta', cls: 'reveal' },
+    { sel: '.trainer-intro-container', cls: 'reveal-left' },
+    { sel: '.plan-intro-container', cls: 'reveal-left' },
+  ];
+
+  sections.forEach(function(s) {
+    var el = document.querySelector(s.sel);
+    if (el && !el.classList.contains(s.cls)) el.classList.add(s.cls);
+  });
+
+  // Add stagger to grids
+  var grids = document.querySelectorAll('.trainer-container, .competitors-section div[style*="grid"]');
+  grids.forEach(function(g) { g.classList.add('stagger'); });
+
+  // Observer
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger').forEach(function(el) {
+    observer.observe(el);
+  });
+
+  // Counter animation for stats
+  function animateCounter(el, target, duration) {
+    var start = 0;
+    var startTime = null;
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      var progress = Math.min((timestamp - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(eased * target);
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(step);
+  }
+
+  // Animate any [data-count] elements when visible
+  var counters = document.querySelectorAll('[data-count]');
+  var counterObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting && !entry.target.dataset.counted) {
+        entry.target.dataset.counted = '1';
+        animateCounter(entry.target, parseInt(entry.target.dataset.count), 2000);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(function(c) { counterObserver.observe(c); });
+})();
+</script>
+</body></html>
