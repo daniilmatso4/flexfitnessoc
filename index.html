@@ -3082,20 +3082,7 @@ Can’t beat it!!</p><a href="#" class="w-inline-block w-dyn-bind-empty w-lightb
   </div>
 </div>
 
-<!-- STEP 2: GHL FULLSCREEN MODAL -->
-<div id="ghl-modal">
-  <div id="ghl-backdrop"></div>
-  <div id="ghl-content">
-    <button id="ghl-close" aria-label="Close">✕</button>
-    <iframe
-      src="https://link.builtbyshah.com/widget/survey/bmkFtP0g2k2NwZGxZZ6D"
-      id="bmkFtP0g2k2NwZGxZZ6D"
-      title="survey"
-      scrolling="no">
-    </iframe>
-    <script src="https://link.builtbyshah.com/js/form_embed.js"></script>
-  </div>
-</div>
+<!-- STEP 2 modal removed: external promotional iframe stripped -->
 
 <style>
 /* ===== PHONE CAPTURE OVERLAY ===== */
@@ -3198,9 +3185,9 @@ body.ghl-open { overflow:hidden; }
   pcBackdrop.addEventListener('click', closePhoneCapture);
   pcClose.addEventListener('click', closePhoneCapture);
 
-  // GHL close
-  ghlBackdrop.addEventListener('click', closeGHL);
-  ghlClose.addEventListener('click', closeGHL);
+  // GHL close (guarded — element removed with promotional iframe)
+  if (ghlBackdrop) ghlBackdrop.addEventListener('click', closeGHL);
+  if (ghlClose) ghlClose.addEventListener('click', closeGHL);
 
   // Phone capture form submit → Google Sheets + SMS → then open GHL
   pcForm.addEventListener('submit', function(e) {
@@ -3229,9 +3216,8 @@ body.ghl-open { overflow:hidden; }
     .finally(function() {
       btn.textContent = 'Send Me Info & Continue';
       btn.disabled = false;
-      // Close phone capture, open GHL
+      // Close phone capture; SMS follow-up is the confirmation
       closePhoneCapture();
-      openGHL();
     });
   });
 })();
