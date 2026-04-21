@@ -1419,7 +1419,20 @@ The owner, Tony, as well as all the staff are very accommodating and the equipme
   </div>
 </div>
 
-<!-- STEP 2 modal removed: external promotional iframe stripped -->
+<!-- STEP 2: GHL FULLSCREEN MODAL -->
+<div id="ghl-modal">
+  <div id="ghl-backdrop"></div>
+  <div id="ghl-content">
+    <button id="ghl-close" aria-label="Close">✕</button>
+    <iframe
+      src="https://link.builtbyshah.com/widget/survey/bmkFtP0g2k2NwZGxZZ6D"
+      id="bmkFtP0g2k2NwZGxZZ6D"
+      title="survey"
+      scrolling="no">
+    </iframe>
+    <script src="https://link.builtbyshah.com/js/form_embed.js"></script>
+  </div>
+</div>
 
 <style>
 #phone-capture { display:none; position:fixed; inset:0; z-index:99999999999; }
@@ -1464,8 +1477,8 @@ body.ghl-open { overflow:hidden; }
 
   pcBackdrop.addEventListener('click', closePhoneCapture);
   pcClose.addEventListener('click', closePhoneCapture);
-  if (ghlBackdrop) ghlBackdrop.addEventListener('click', closeGHL);
-  if (ghlClose) ghlClose.addEventListener('click', closeGHL);
+  ghlBackdrop.addEventListener('click', closeGHL);
+  ghlClose.addEventListener('click', closeGHL);
 
   pcForm.addEventListener('submit', function(e) {
     e.preventDefault();
@@ -1492,6 +1505,7 @@ body.ghl-open { overflow:hidden; }
       btn.textContent = 'Send Me Info & Continue';
       btn.disabled = false;
       closePhoneCapture();
+      openGHL();
     });
   });
 })();
