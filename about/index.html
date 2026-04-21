@@ -1424,6 +1424,10 @@ The owner, Tony, as well as all the staff are very accommodating and the equipme
   <div id="ghl-backdrop"></div>
   <div id="ghl-content">
     <button id="ghl-close" aria-label="Close">✕</button>
+    <div id="ghl-custom-header" aria-hidden="true">
+      <h2>Almost there</h2>
+      <p>Share a bit more and we'll send you membership info shortly.</p>
+    </div>
     <iframe
       src="https://link.builtbyshah.com/widget/survey/bmkFtP0g2k2NwZGxZZ6D"
       id="bmkFtP0g2k2NwZGxZZ6D"
@@ -1445,6 +1449,10 @@ The owner, Tony, as well as all the staff are very accommodating and the equipme
 #ghl-content { position:relative; z-index:2; width:100vw; height:calc(var(--vh,1vh)*100); padding:16px; overflow-y:auto; -webkit-overflow-scrolling:touch; }
 #ghl-content iframe { width:100%; min-height:100%; border:none; background:transparent; display:block; }
 #ghl-close { position:sticky; top:16px; margin-left:auto; margin-right:16px; width:32px; height:32px; border-radius:100px; background:#fff; color:#000; font-size:24px; line-height:1; display:flex; align-items:center; justify-content:center; border:none; cursor:pointer; z-index:3; }
+#ghl-custom-header { position:absolute; top:64px; left:16px; right:16px; max-width:500px; margin:0 auto; padding:32px 24px 24px; background:#1a1a1a; border:1px solid #2a2a2a; border-radius:12px 12px 0 0; z-index:5; text-align:center; pointer-events:none; box-sizing:border-box; min-height:220px; }
+#ghl-custom-header h2 { color:#fff; font-family:Oswald,sans-serif; font-size:1.5rem; font-weight:600; text-transform:uppercase; margin:0 0 12px; letter-spacing:0.02em; line-height:1.2; }
+#ghl-custom-header p { color:#aaa; font-size:13px; line-height:1.5; margin:0; font-family:Montserrat,sans-serif; }
+@media (max-width:767px) { #ghl-custom-header { min-height:260px; padding:28px 20px 20px; } #ghl-custom-header h2 { font-size:1.3rem; } }
 @media (max-width:767px) {
   #pc-form-wrap { padding:32px 20px; }
   #pc-close { width:32px; height:32px; font-size:18px; top:12px; right:12px; }
