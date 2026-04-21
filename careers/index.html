@@ -916,10 +916,11 @@
 #ghl-content { position:relative; z-index:2; width:100vw; height:calc(var(--vh,1vh)*100); padding:16px; overflow-y:auto; -webkit-overflow-scrolling:touch; }
 #ghl-content iframe { width:100%; min-height:100%; border:none; background:transparent; display:block; }
 #ghl-close { position:sticky; top:16px; margin-left:auto; margin-right:16px; width:32px; height:32px; border-radius:100px; background:#fff; color:#000; font-size:24px; line-height:1; display:flex; align-items:center; justify-content:center; border:none; cursor:pointer; z-index:3; }
-#ghl-custom-header { position:absolute; top:64px; left:16px; right:16px; max-width:500px; margin:0 auto; padding:32px 24px 24px; background:#1a1a1a; border:1px solid #2a2a2a; border-radius:12px 12px 0 0; z-index:5; text-align:center; pointer-events:none; box-sizing:border-box; min-height:220px; }
-#ghl-custom-header h2 { color:#fff; font-family:Oswald,sans-serif; font-size:1.5rem; font-weight:600; text-transform:uppercase; margin:0 0 12px; letter-spacing:0.02em; line-height:1.2; }
-#ghl-custom-header p { color:#aaa; font-size:13px; line-height:1.5; margin:0; font-family:Montserrat,sans-serif; }
-@media (max-width:767px) { #ghl-custom-header { min-height:260px; padding:28px 20px 20px; } #ghl-custom-header h2 { font-size:1.3rem; } }
+#ghl-custom-header { position:absolute; top:64px; left:16px; right:16px; max-width:560px; margin:0 auto; padding:56px 32px 48px; background:#1a1a1a; border:1px solid #2a2a2a; border-radius:12px 12px 0 0; z-index:5; text-align:center; pointer-events:none; box-sizing:border-box; min-height:320px; display:flex; flex-direction:column; justify-content:center; align-items:center; }
+#ghl-custom-header h2 { color:#fff; font-family:Oswald,sans-serif; font-size:2.25rem; font-weight:700; text-transform:uppercase; margin:0; letter-spacing:0.04em; line-height:1.1; }
+#ghl-custom-header h2::after { content:""; display:block; width:56px; height:3px; background:#e50914; margin:20px auto; }
+#ghl-custom-header p { color:#bbb; font-size:14px; line-height:1.6; margin:0; font-family:Montserrat,sans-serif; max-width:380px; }
+@media (max-width:767px) { #ghl-custom-header { min-height:340px; padding:40px 24px 32px; top:56px; } #ghl-custom-header h2 { font-size:1.7rem; } #ghl-custom-header h2::after { width:48px; height:2px; margin:16px auto; } #ghl-custom-header p { font-size:13px; } }
 @media (max-width:767px) {
   #pc-form-wrap { padding:32px 20px; }
   #pc-close { width:32px; height:32px; font-size:18px; top:12px; right:12px; }
