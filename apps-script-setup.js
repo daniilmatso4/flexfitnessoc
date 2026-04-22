@@ -139,7 +139,7 @@ function sendCareerNotification(data) {
   ].join("\n");
 
   try {
-    var options = { noReply: false };
+    var options = { name: "Flex Fitness Careers" };
     if (applicantEmail) options.replyTo = applicantEmail;
     MailApp.sendEmail(OWNER_EMAIL, subject, body, options);
     return "Sent to " + OWNER_EMAIL;

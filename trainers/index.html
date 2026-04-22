@@ -1610,13 +1610,19 @@ body.ghl-open { overflow:hidden; }
     return '';
   }
   document.addEventListener('input', function(e) {
-    if (e.target.type === 'tel') {
-      var pos = e.target.selectionStart;
-      var old = e.target.value;
-      e.target.value = formatPhone(old);
-      if (e.target.value.length > old.length) pos++;
-      e.target.setSelectionRange(pos, pos);
+    if (e.target.type !== 'tel') return;
+    var old = e.target.value;
+    var cursorPos = e.target.selectionStart;
+    var digitsBefore = old.substring(0, cursorPos).replace(/\D/g, '').length;
+    var formatted = formatPhone(old);
+    if (formatted === old) return;
+    e.target.value = formatted;
+    var newPos = 0, count = 0;
+    while (newPos < formatted.length && count < digitsBefore) {
+      if (/\d/.test(formatted[newPos])) count++;
+      newPos++;
     }
+    e.target.setSelectionRange(newPos, newPos);
   });
 })();
 </script><script>
