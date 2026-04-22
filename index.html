@@ -499,9 +499,12 @@ p { line-height: 1.7; }
   margin-left: auto;
   margin-right: auto;
 }
-/* Hero headline size — slightly tightened from original */
+/* Hero headline size — slightly tightened from original.
+   margin-right override prevents the h1 from spilling over the video
+   on the right at medium-wide desktop widths. */
 .hero .heading {
   font-size: clamp(38px, 6.2vw, 92px);
+  margin-right: 0;
 }
 
 /* 7. Instagram section */
