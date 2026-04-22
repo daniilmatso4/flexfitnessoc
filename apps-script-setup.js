@@ -9,6 +9,9 @@
 var CONTACT_SHEET = "Contact";
 var CAREERS_SHEET = "Careers";
 
+// ===== Notification email =====
+var OWNER_EMAIL = "ocflexfitness@gmail.com";
+
 // ===== Twilio credentials — REPLACE before deploy =====
 var TWILIO_SID   = "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 var TWILIO_TOKEN = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
@@ -74,9 +77,12 @@ function handleCareers(ss, data) {
       "Timestamp", "Full Name", "Email", "Phone", "City",
       "Position", "Currently Employed", "Previous Gym Experience",
       "Years of Experience", "Required Qualities", "Personal Qualities",
-      "Status"
+      "Status", "Email Sent"
     ]);
   }
+
+  var emailStatus = sendCareerNotification(data);
+
   sheet.appendRow([
     new Date(),
     (data.fullName              || "").trim(),
@@ -89,9 +95,58 @@ function handleCareers(ss, data) {
     (data.yearsOfExperience     || "").trim(),
     (data.requiredQualities     || "").trim(),
     (data.personalQualities     || "").trim(),
-    "New"
+    "New",
+    emailStatus
   ]);
-  return jsonResponse({ result: "success" });
+  return jsonResponse({ result: "success", email: emailStatus });
+}
+
+function sendCareerNotification(data) {
+  var name     = (data.fullName || "Unknown applicant").trim();
+  var position = (data.position || "No position listed").trim();
+  var applicantEmail = (data.email || "").trim();
+  var subject  = "New Career Application — " + name + " — " + position;
+
+  var body = [
+    "A new career application was submitted through flexfitnessoc.com.",
+    "",
+    "APPLICANT",
+    "-----------------------------------",
+    "Name:        " + (data.fullName            || "—"),
+    "Email:       " + (data.email               || "—"),
+    "Phone:       " + (data.phone               || "—"),
+    "City:        " + (data.city                || "—"),
+    "Position:    " + (data.position            || "—"),
+    "",
+    "WORK HISTORY",
+    "-----------------------------------",
+    "Currently employed:       " + (data.currentlyEmployed     || "—"),
+    "Previous gym experience:  " + (data.previousGymExperience || "—"),
+    "Years of experience:      " + (data.yearsOfExperience     || "—"),
+    "",
+    "QUALITIES FOR THE ROLE",
+    "-----------------------------------",
+    (data.requiredQualities || "—"),
+    "",
+    "PERSONAL QUALITIES",
+    "-----------------------------------",
+    (data.personalQualities || "—"),
+    "",
+    "-----------------------------------",
+    "Submitted: " + new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }),
+    "",
+    "Reply to this email to respond directly to the applicant."
+  ].join("\n");
+
+  try {
+    var options = { noReply: false };
+    if (applicantEmail) options.replyTo = applicantEmail;
+    MailApp.sendEmail(OWNER_EMAIL, subject, body, options);
+    return "Sent to " + OWNER_EMAIL;
+  } catch (e) {
+    Logger.log("Career email failed: " + e.toString());
+    return "Failed: " + e.toString();
+  }
 }
 
 // ===== Twilio SMS =====
